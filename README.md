@@ -1,1 +1,1 @@
-A working spotify clone website usinh Html,css,javascript
+A working spotify clone website using Html,css,javascript
