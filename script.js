@@ -1,4 +1,7 @@
 console.log("some js code ongoing")
+//check
+let currSong=new Audio();
+
 
 
 async function gettingSongs() {
@@ -6,13 +9,11 @@ async function gettingSongs() {
 
     let response = await songs.text()
 
-    // console.log(response)
-
     let div = document.createElement("div")
     div.innerHTML = response
     let as = div.getElementsByTagName("a")
 
-    console.log(as);
+    // console.log(as);
     let songList = [];
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
@@ -20,14 +21,24 @@ async function gettingSongs() {
 
             songList.push(element.href)
         }
-
     }
+ return songList;
+}//function for getting songs
 
-    return songList;
 
 
 
-}
+
+function playMusic(track){
+ currSong.src="/songs/"+track;
+currSong.play()
+
+}//function for playing a song
+
+
+
+
+
 
 async function main() {
     let songsplaylist = await gettingSongs();
@@ -37,14 +48,14 @@ async function main() {
     for (let i = 0; i < songsplaylist.length; i++) {
         const element = songsplaylist[i].split(`/songs/`)[1];
         let goodElement = element.replaceAll("%20", " ");
-        let songName = goodElement.split('(PagalWorld)')[0];
+        // let songName = goodElement.split('(PagalWorld)')[0];
 
         let Created_div = document.createElement("div")
         Created_div.classList.add("song") 
         Created_div.innerHTML =
             `<img src="song.svg" class="invert" alt="">
 <div class="songdetails">
-<div>${songName}</div>
+<div>${goodElement}</div>
 <div>Song Artist</div>
 </div>
 
@@ -53,19 +64,36 @@ async function main() {
  <img src="playwithcircle.svg" class="invert" alt="">
  </div>
 `;
+let playList = document.querySelector(".playList")
+playList.append(Created_div)
 
-
-
-
-        let playList = document.querySelector(".playList")
-        playList.append(Created_div)
-    }
-
-
-
-    let song1 = new Audio(songsplaylist[2])
-    // song1.play()
 }
+//adding event listener to the song
+Array.from(document.querySelector(".playList").querySelectorAll(".song")).forEach((e)=>{
+e.addEventListener("click", elem=>{
+    console.log(e.querySelector(".songdetails").firstElementChild.innerHTML)
+
+    playMusic(e.querySelector(".songdetails").firstElementChild.innerHTML);
+
+
+
+    //adding functionalities to the buttons
+    let play=document.getElementById("playButtonOfPlaybar")
+    play.addEventListener("click", ()=>{
+    if (currSong.paused) {
+        currSong.play()
+        // play.src="pause.svg"
+        
+    } else {
+        currSong.pause()
+
+    }
+   })
+}
+)
+}
+)
+}//main function
 
 
 main()
