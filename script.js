@@ -1,6 +1,6 @@
 console.log("some js code ongoing")
 //check
-let currSong=new Audio();
+let currSong = new Audio();
 
 
 
@@ -22,17 +22,17 @@ async function gettingSongs() {
             songList.push(element.href)
         }
     }
- return songList;
+    return songList;
 }//function for getting songs
 
 
 
 
 
-function playMusic(track){
- currSong.src="/songs/"+track;
-currSong.play()
-
+function playMusic(track) {
+    currSong.src = "/songs/" + track;
+    currSong.play()
+    // play.src="pause.svg"
 }//function for playing a song
 
 
@@ -43,6 +43,8 @@ currSong.play()
 async function main() {
     let songsplaylist = await gettingSongs();
 
+    let play = document.getElementById("playButtonOfPlaybar")
+
     console.log(songsplaylist)
 
     for (let i = 0; i < songsplaylist.length; i++) {
@@ -51,7 +53,7 @@ async function main() {
         // let songName = goodElement.split('(PagalWorld)')[0];
 
         let Created_div = document.createElement("div")
-        Created_div.classList.add("song") 
+        Created_div.classList.add("song")
         Created_div.innerHTML =
             `<img src="song.svg" class="invert" alt="">
 <div class="songdetails">
@@ -64,35 +66,36 @@ async function main() {
  <img src="playwithcircle.svg" class="invert" alt="">
  </div>
 `;
-let playList = document.querySelector(".playList")
-playList.append(Created_div)
-
-}
-//adding event listener to the song
-Array.from(document.querySelector(".playList").querySelectorAll(".song")).forEach((e)=>{
-e.addEventListener("click", elem=>{
-    console.log(e.querySelector(".songdetails").firstElementChild.innerHTML)
-
-    playMusic(e.querySelector(".songdetails").firstElementChild.innerHTML);
-
-
-
-    //adding functionalities to the buttons
-    let play=document.getElementById("playButtonOfPlaybar")
-    play.addEventListener("click", ()=>{
-    if (currSong.paused) {
-        currSong.play()
-        // play.src="pause.svg"
-        
-    } else {
-        currSong.pause()
+        let playList = document.querySelector(".playList")
+        playList.append(Created_div)
 
     }
-   })
-}
-)
-}
-)
+    //adding event listener to the song
+    Array.from(document.querySelector(".playList").querySelectorAll(".song")).forEach((e) => {
+        e.addEventListener("click", elem => {
+            console.log(e.querySelector(".songdetails").firstElementChild.innerHTML)
+            play.src = "pause.svg"
+
+            playMusic(e.querySelector(".songdetails").firstElementChild.innerHTML);
+
+
+
+            //adding functionalities to the buttons
+
+            play.addEventListener("click", () => {
+                if (currSong.paused) {
+                    currSong.play()
+                    play.src = "pause.svg"
+
+                } else {
+                    currSong.pause()
+                    play.src = "play.svg"
+                }
+            })
+        }
+        )
+    }
+    )
 }//main function
 
 
