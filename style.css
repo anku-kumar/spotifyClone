@@ -158,11 +158,12 @@ height: 100%; */
 .playbar{
     background-color: rgba(179, 190, 179, 0.356);
     border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* gap: 12px; */
     position: absolute;
     bottom: 0;
+    height: 50px;
     width: 100%;
 }
 
@@ -191,6 +192,21 @@ height: 100%; */
     gap: 3px;
     
 }
+.abovebar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.songinfo,.songduration{
+padding:5px 20px;
+}
+.songinfo{
+    width: 200px;
+}
+.playbarControls{
+    padding-top: 20px;
+}
+
 
 
 /* scroll bar styling */
