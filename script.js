@@ -4,6 +4,9 @@ let currSong = new Audio();
 let play = document.getElementById("playButtonOfPlaybar")
 
 
+
+
+
 async function gettingSongs() {
     let songs = await fetch("http://127.0.0.1:5500/songs/");
 
@@ -29,12 +32,17 @@ async function gettingSongs() {
 
 
 
+
+
 function playMusic(track) {
+    console.log(currSong)
     currSong.src = "/songs/" + track +"(PagalWorld)%20-%20Copy.mp3";
     currSong.play()
     play.src="pause.svg"
     document.querySelector(".songinfo").innerHTML=track
 }//function for playing a song
+
+
 
 
 
@@ -60,12 +68,12 @@ return `${formattedmins}:${formattedsec}`
 
 
 
+
+
 async function main() {
     let songsplaylist = await gettingSongs();
 
-    
-
-    console.log(songsplaylist)
+ console.log(songsplaylist)
 
     for (let i = 0; i < songsplaylist.length; i++) {
         const element = songsplaylist[i].split(`/songs/`)[1];
@@ -76,54 +84,56 @@ async function main() {
         Created_div.classList.add("song")
         Created_div.innerHTML =
             `<img src="song.svg" class="invert" alt="">
-<div class="songdetails">
-<div>${songName}</div>
-<div>Song Artist</div>
-</div>
+            <div class="songdetails">
+            <div>${songName}</div>
 
-<div class="playForSong">
- <span>Play Now</span>
- <img src="playwithcircle.svg" class="invert" alt="">
- </div>
-`;
+            </div>
+
+            <div class="playForSong">
+            <span>Play Now</span>
+            <img src="playwithcircle.svg" class="invert" alt="">
+            </div>`;
+
         let playList = document.querySelector(".playList")
         playList.append(Created_div)
 
     }
     //adding event listener to the song
+    
     Array.from(document.querySelector(".playList").querySelectorAll(".song")).forEach((e) => {
         e.addEventListener("click", elem => {
             // console.log(e.querySelector(".songdetails").firstElementChild.innerHTML)
-            
-             
             playMusic(e.querySelector(".songdetails").firstElementChild.innerHTML);
 
 
+              
+            }
+            )
+            }
+            )
 
-            
-            //adding functionalities to the buttons
-
-            play.addEventListener("click", () => {
+             //adding functionalities to the buttons
+             play.addEventListener("click", () => {
                 if (currSong.paused) {
                     currSong.play()
                     play.src = "pause.svg"
 
                 } 
-                else {
+                else if(!currSong.paused){
                     currSong.pause()
                     play.src = "play.svg"
                 }
-            })
-        }
-        )
-    }
-    )
+             })
 
 
-
+    //function for song time and song duration
    let songDur=document.querySelector(".songduration");
    currSong.addEventListener("timeupdate",()=>{
     songDur.innerHTML=`${secondsToMinute(currSong.currentTime)}/${secondsToMinute(currSong.duration)}`
+    let circle=document.querySelector(".circle")
+    circle.style.left=(currSong.currentTime/currSong.duration * 100)+"%";
+     document.querySelector(".playedpart").style.width=(currSong.currentTime/currSong.duration * 100)+"%"
+    
     }
 
     )
